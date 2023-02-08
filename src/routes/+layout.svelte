@@ -1,19 +1,29 @@
 <script>
-	import Header from './Header.svelte';
+	import Header from '../components/Header.svelte';
+	import { SvelteToast } from '@zerodevx/svelte-toast'
 	import './styles.css';
 	import "../app.css";
+	import Alerts from '../components/Alerts.svelte';
+
+	const options = {
+		duration: 4000,       // duration of progress bar tween to the `next` value
+		initial: 0,           // initial progress bar value
+		next: 1,              // next progress value
+		pausable: true,      // pause progress bar tween on mouse hover
+		dismissable: true,    // allow dismiss with close button
+		reversed: false,      // insert new toast to bottom of stack
+		intro: { y: -256 },    // toast intro fly animation settings
+		theme: {},            // css var overrides
+		classes: []           // user-defined classes
+	}
 </script>
-
+<SvelteToast {options} />
 <div class="app">
-	<Header />
-
+	<Header/>
 	<main>
+		<Alerts/>
 		<slot />
 	</main>
-
-	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
 </div>
 
 <style>
@@ -28,9 +38,8 @@
 		display: flex;
 		flex-direction: column;
 		padding: 1rem;
+		padding-top: 0;
 		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
 		box-sizing: border-box;
 	}
 
@@ -45,6 +54,14 @@
 	footer a {
 		font-weight: bold;
 	}
+
+	:root {
+    --toastBackground: rgb(236, 80, 111);
+	--toastWidth: 100%;
+    --toastBarWidth: 100%;
+	--toastContainerLeft: 2rem;
+	--toastBorderRadius: 0.5rem
+  	}
 
 	@media (min-width: 480px) {
 		footer {

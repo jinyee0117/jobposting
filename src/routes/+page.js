@@ -1,3 +1,17 @@
-// since there's no dynamic data here, we can prerender
-// it so that it gets served as a static asset in production
-export const prerender = true;
+import { PUBLIC_BACKEND_BASE_URL } from '$env/static/public';
+
+export async function load({ fetch }) {
+    const resp = await fetch(PUBLIC_BACKEND_BASE_URL + '/api/collections/jobs/records');
+  
+    const res = await resp.json();
+
+    if (resp.status == 200) {
+      return {
+        jobs: res.items
+      }
+    } else {
+      return {
+        jobs: []
+      }
+    }
+  }

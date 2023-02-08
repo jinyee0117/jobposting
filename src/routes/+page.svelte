@@ -1,65 +1,34 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+	import humanize from 'humanize-plus';
+    export let data;
 </script>
 
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
-</svelte:head>
+<h1 class="text-center text-xl font-bold">Find Your Next Job</h1>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
+<div class="overflow-x-auto w-full pl-16 pr-16">
+    {#each data.jobs as job}
+        <div class="flex flex-col mt-10">
+            <div>
+                <a class="font-bold text-2xl" href="/jobs/{job.id}">{job.title}</a>
+                <div class="text-sm mt-1">
+                    {job.employer} . {job.location} .
+                    <span class="text-sm">USD {humanize.formatNumber(job.minAnnualCompensation)} - USD {humanize.formatNumber(
+						job.maxAnnualCompensation
+					)}</span>
+                </div>
+                <div class="italic text-xs opacity-50 mt-2"
+                    >posted {new Date(job.created).toLocaleDateString(undefined, {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })}</div
+                >
+            </div>
 
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
-
-	<h1 class="text-3xl font-bold underline">Welcome to SvelteKit</h1>
-	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-	<a href="/about">About my site</a>
-	<button class="btn">Button</button>
-	<span class="badge">Badge</span>
-</section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>
+            <div class="mt-4 ">
+                {job.description.slice(0, 240)}...
+            </div>
+        </div>
+    {/each}
+</div>
