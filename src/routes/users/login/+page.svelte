@@ -1,7 +1,6 @@
 <script>
     import { goto } from '$app/navigation';
     import { authenticateUser } from './../../../utils/auth.js';
-    import { toast } from '@zerodevx/svelte-toast'
 	import { loggedIn } from './../../../utils/auth.js';
 	import { alert } from '../../../utils/alert.js';
     let formErrors = {};
@@ -14,6 +13,23 @@
   
     async function onSubmit(evt) {
       evt.preventDefault()
+      if (evt.target['username'].value == ''){
+        formErrors['username'] = {message: 'Missing required value'}
+      } else if (formErrors.username) {
+        delete formErrors.username
+        formErrors = formErrors
+      }
+
+      if (evt.target['password'].value == ''){
+        formErrors['password'] = {message: 'Missing required value'}
+      } else if (formErrors.password) {
+        delete formErrors.password
+        formErrors = formErrors
+      }
+      console.log(formErrors)
+      if (Object.keys(formErrors).length > 0){
+        return
+      }
       isLoading = true
         const res = await authenticateUser(evt.target['username'].value, evt.target['password'].value)
         isLoading = false
@@ -24,7 +40,7 @@
             alert.setAlert('Check username / password', 'warning')
         }
       
-      
+
     }
   </script>
 
@@ -58,7 +74,6 @@
                   name="password"
                   placeholder=""
                   class="input input-bordered w-full"
-                  required
               />
               {#if 'password' in formErrors}
                   <label class="label" for="password">

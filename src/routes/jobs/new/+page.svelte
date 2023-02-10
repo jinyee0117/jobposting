@@ -1,8 +1,8 @@
 <script>
-    import { goto } from '$app/navigation';
+  import { goto } from '$app/navigation';
 	import { PUBLIC_BACKEND_BASE_URL } from '$env/static/public';
+	import { alert } from '../../../utils/alert';
 	import { getTokenFromLocalStorage, getUserId } from '../../../utils/auth';
-    import { toast } from '@zerodevx/svelte-toast'
     let formErrors = {};
 
     function postJob() {
@@ -102,7 +102,7 @@
       if (res.status == 200){
         postJob()
       } else {
-        toast.push(resp.message)
+        alert.setAlert(resp.message, "warning")
       }
 
     }

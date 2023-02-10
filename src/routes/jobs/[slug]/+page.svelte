@@ -1,11 +1,11 @@
 <script>
 	import { goto } from "$app/navigation";
-    import humanize from "humanize-plus";
-    export let data;
-    import SvelteMarkdown from 'svelte-markdown';
-    import { toast } from '@zerodevx/svelte-toast'
+  import humanize from "humanize-plus";
+  export let data;
+  import SvelteMarkdown from 'svelte-markdown';
 	import { getTokenFromLocalStorage, getUserId } from "../../../utils/auth";
 	import { PUBLIC_BACKEND_BASE_URL } from "$env/static/public";
+	import { alert } from "../../../utils/alert";
 
     const user = getUserId()
 
@@ -27,11 +27,11 @@
         goto('/')
       } else {
         const resp = await res.json()
-        toast.push(resp.message)
+        alert.setAlert(resp.message, "error")
       }
 
     }
-
+console.log(data)
   </script>
   
 <div class="mt-10 ml-16 mr-16 mb-20">

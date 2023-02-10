@@ -10,7 +10,7 @@ export async function load({ fetch, params }) {
     }
   } else {
     return {
-      jobs: []
+      job: []
     }
   }
 }

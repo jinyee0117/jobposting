@@ -8,7 +8,7 @@ function initialStore() {
 
 	return {
 		subscribe,
-		setAlert: (message, type) => set({message: message, type: type}),
+		setAlert: (message, type) => set({message, type}),
 		resetAlert: () => set({message: null, type: null}),
 	};
 }
